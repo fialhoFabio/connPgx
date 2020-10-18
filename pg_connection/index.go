@@ -1,9 +1,9 @@
 package pg_connection
 
 import (
-	"context"
+	"database/sql"
 	"fmt"
-	"github.com/jackc/pgx/v4/pgxpool"
+	_ "github.com/lib/pq"
 )
 
 const (
@@ -14,15 +14,15 @@ const (
 	dbname   = "fialhoFabio_mc"
 )
 
-var connection *pgxpool.Pool
+var connection *sql.DB
 
-func Connection() *pgxpool.Pool {
+func Connection() *sql.DB {
 	return connection
 }
 
 func Initialize() {
 	connStr := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
-	conn, err := pgxpool.Connect(context.Background(), connStr)
+	conn, err := sql.Open("postgres", connStr)
 	connection = conn
 	if err != nil {
 		panic(err)
