@@ -1,10 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"github.com/fialhoFabio/go_person/controller"
 	"github.com/fialhoFabio/go_person/middleware"
 	"github.com/fialhoFabio/go_person/pg_connection"
+	"log"
 	"net/http"
 )
 
@@ -15,6 +15,5 @@ func main() {
 	http.HandleFunc("/person", middleware.Load(controller.PersonController))
 	http.HandleFunc("/person/", middleware.Load(controller.PersonController))
 
-	fmt.Println("Server running...")
-	_ = http.ListenAndServe(":8090", nil)
+	log.Println(http.ListenAndServe(":8090", nil))
 }
