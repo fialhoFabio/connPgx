@@ -21,7 +21,9 @@ func GetError(err error) {
 }
 
 func PathId(r *http.Request, controllerPath string) CustomUint {
-	if pathId := strings.ReplaceAll(r.URL.Path, controllerPath, ""); pathId != "" {
+	pathId := strings.ReplaceAll(r.URL.Path, controllerPath, "")
+	pathId = strings.ReplaceAll(pathId, "/", "")
+	if pathId != "" {
 		parsedPathId, err := strconv.ParseUint(pathId, 10, bits.UintSize)
 		if err != nil {
 			panic(fmt.Errorf("ivalid pathid: %v", pathId))
